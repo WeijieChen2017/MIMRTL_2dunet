@@ -79,7 +79,7 @@ def SingleImage_Generator(dataA, name_dataset, n_slice=1, name_tag="", resize_f=
             np.save(name2save, img)
         print(str(c)+" images have been saved.")
 
-name_dataset = "pet_test"
+name_dataset = "sk8R"
 n_slice = 5
 
 import os
