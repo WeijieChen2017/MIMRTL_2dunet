@@ -23,7 +23,7 @@ def create_index(dataA, n_slice):
             index[idx_z, idx_c] = idx_z-(n_slice-idx_c+1)+n_slice//2+2
     index[index<0]=0
     index[index>z-1]=z-1
-    return int(index)
+    return index
 
 def slice5(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
     # shape supposed to be 512*512*284 by default
