@@ -32,7 +32,7 @@ def slice5_AB(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
     h, w, z = dataA.shape
     h = h*resize_f
     w = w*resize_f
-    img = np.zeros((n_slice, h, w))
+    img = np.zeros((n_slice, h, w*2))
     index = create_index(dataA, n_slice)
     print(index)
         
@@ -50,7 +50,7 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
     h, w, z = dataA.shape
     h = h*resize_f
     w = w*resize_f
-    img = np.zeros((n_slice, h, w*2))
+    img = np.zeros((n_slice, h, w))
     index = create_index(dataA, n_slice)
     print(index)
         
