@@ -42,7 +42,7 @@ def slice5_AB(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
             img[idx_c, :, w:] = zoom(dataB[:, :, int(index[idx_z, idx_c])], zoom=resize_f)
         name2save = path2save+name_tag+"_"+str(idx_z)+".npy"
         np.save(name2save, img)
-    print(str(c)+" images have been saved.")
+    print(str(z)+" images have been saved.")
 
 def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
     # shape supposed to be 512*512*284 by default
@@ -59,7 +59,7 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
             img[idx_c, :, :] = zoom(dataA[:, :, int(index[idx_z, idx_c])], zoom=resize_f)
         name2save = path2save+name_tag+"_"+str(idx_z)+".npy"
         np.save(name2save, img)
-    print(str(c)+" images have been saved.")
+    print(str(z)+" images have been saved.")
 
 name_dataset = "sk8R"
 n_slice = 5
