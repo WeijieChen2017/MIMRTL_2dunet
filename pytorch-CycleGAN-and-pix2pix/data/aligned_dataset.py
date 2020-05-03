@@ -58,7 +58,8 @@ class AlignedDataset(BaseDataset):
         # load npy files
         AB_path = self.AB_paths[index]
         AB = np.load(AB_path)
-        print(AB.shape)
+        # print(AB.shape)
+        # this code runs
         # split AB
         c, h, w = AB.shape
         w = w // 2
