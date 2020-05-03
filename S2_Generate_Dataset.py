@@ -37,8 +37,8 @@ def slice5(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
         
     for idx_z in range(z):
         for idx_c in range(n_slice):
-            img[idx_c, :, :w] = zoom(dataA[:, :, index(idx_z, idx_c)], zoom=resize_f)
-            img[idx_c, :, w:] = zoom(dataB[:, :, index(idx_z, idx_c)], zoom=resize_f)
+            img[idx_c, :, :w] = zoom(dataA[:, :, index[idx_z, idx_c]], zoom=resize_f)
+            img[idx_c, :, w:] = zoom(dataB[:, :, index[idx_z, idx_c]], zoom=resize_f)
         name2save = path2save+name_tag+"_"+str(idx_z)+".npy"
         np.save(name2save, img)
     print(str(c)+" images have been saved.")
