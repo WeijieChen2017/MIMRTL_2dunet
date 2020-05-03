@@ -102,9 +102,9 @@ for path_ori in list_ori:
         print("B:", filename_sim)
                 
         data_sim = maxmin_norm(nib.load(path_sim).get_fdata())
-        slice5(dataA=data_ori, dataB=data_sim,
-               name_dataset=name_dataset, n_slice=n_slice,
-               name_tag=filename_sim, resize_f=1)
+        slice5_AB(dataA=data_ori, dataB=data_sim,
+                  name_dataset=name_dataset, n_slice=n_slice,
+                  name_tag=filename_sim, resize_f=1)
         
     print("------------------------------------------------------------------------")
         
