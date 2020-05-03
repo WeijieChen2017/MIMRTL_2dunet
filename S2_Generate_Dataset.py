@@ -38,8 +38,8 @@ def slice5(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
         
     for idx_z in range(z):
         for idx_c in range(n_slice):
-        	print(index[idx_z, idx_c])
-        	print(dataA[:, :, index[idx_z, idx_c]].shape)
+            print(index[idx_z, idx_c])
+            print(dataA[:, :, index[idx_z, idx_c]].shape)
             img[idx_c, :, :w] = zoom(dataA[:, :, index[idx_z, idx_c]], zoom=resize_f)
             img[idx_c, :, w:] = zoom(dataB[:, :, index[idx_z, idx_c]], zoom=resize_f)
         name2save = path2save+name_tag+"_"+str(idx_z)+".npy"
@@ -125,8 +125,8 @@ for path_ori in list_ori:
                 
         data_sim = maxmin_norm(nib.load(path_sim).get_fdata())
         slice5(dataA=data_ori, dataB=data_sim,
-        	   name_dataset=name_dataset, n_slice=n_slice,
-        	   name_tag=filename_sim, resize_f=1)
+               name_dataset=name_dataset, n_slice=n_slice,
+               name_tag=filename_sim, resize_f=1)
         
     print("------------------------------------------------------------------------")
         
