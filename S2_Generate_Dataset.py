@@ -62,7 +62,7 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
     print(str(z)+" images have been saved.")
 
 name_dataset = "sk8R"
-n_slice = 11
+n_slice = 21
 
 import os
 

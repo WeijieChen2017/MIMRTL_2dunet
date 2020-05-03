@@ -9,6 +9,7 @@ from scipy.ndimage import zoom
 
 name_dataset = "sk8R"
 resize_f = 1
+n_slice = 11
 # test_folder = "testB"
 
 # list_ori = glob.glob("./data/"+name_dataset+"/test/*.nii")
@@ -34,7 +35,7 @@ for path_ori in list_ori:
 #         img = cv2.resize(np.asarray(plt.imread(path_fake)), dsize=(nii_data.shape[0], nii_data.shape[1]), interpolation=cv2.INTER_CUBIC)
         img = np.squeeze(np.load(path_fake))
         img[img<0] = 0
-        pred_fake[:, :, idx] = zoom(img[2, :, :], zoom=1/resize_f)
+        pred_fake[:, :, idx] = zoom(img[int(n_slice//2), :, :], zoom=1/resize_f)
     
 #     factor_r = np.sum(nii_data)/np.sum(pred_real)
     factor_f = np.sum(nii_data)/np.sum(pred_fake)
