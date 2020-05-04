@@ -9,7 +9,7 @@ from scipy.ndimage import zoom
 
 name_dataset = "sk8R"
 resize_f = 1
-n_slice = 11
+n_slice = 21
 # test_folder = "testB"
 
 # list_ori = glob.glob("./data/"+name_dataset+"/test/*.nii")
