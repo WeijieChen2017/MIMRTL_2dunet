@@ -51,7 +51,6 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
     w = w*resize_f
     img = np.zeros((n_slice, h, w))
     index = create_index(dataA, n_slice)
-    print(index)
         
     for idx_z in range(z):
         for idx_c in range(n_slice):
