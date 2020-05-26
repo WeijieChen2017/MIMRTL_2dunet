@@ -61,8 +61,8 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
         np.save(name2save, img)
     print(str(z)+" images have been saved.")
 
-name_dataset = "sk8R"
-n_slice = 21
+name_dataset = "phantom"
+n_slice = 7
 
 import os
 
