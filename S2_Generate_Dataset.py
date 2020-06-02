@@ -59,7 +59,7 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
         np.save(name2save, img)
     print(str(z)+" images have been saved.")
 
-name_dataset = "phantomNoiseFree"
+name_dataset = "uniform"
 n_slice = 7
 
 import os
