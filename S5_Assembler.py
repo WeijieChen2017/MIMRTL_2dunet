@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from scipy.ndimage import zoom
 
-name_dataset = "uniform"
+name_dataset = "sk8R"
 resize_f = 1
 n_slice = 7
 # test_folder = "testB"
