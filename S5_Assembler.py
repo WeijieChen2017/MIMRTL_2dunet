@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 
 from scipy.ndimage import zoom
 
-name_dataset = "sk8R"
+name_dataset = "sk8R_721"
 resize_f = 1
-n_slice = 7
+n_slice = 1
 # test_folder = "testB"
 
-list_ori = glob.glob("./data/"+name_dataset+"/test/*.nii")
-# list_ori = glob.glob("./data/phantom/test/*.nii")
+# list_ori = glob.glob("./data/"+name_dataset+"/test/*.nii")
+list_ori = glob.glob("./data/sk8R_721/test/*.nii")
 list_ori.sort()
 for path_ori in list_ori:
     print(path_ori)
@@ -35,7 +35,13 @@ for path_ori in list_ori:
 #         img = cv2.resize(np.asarray(plt.imread(path_fake)), dsize=(nii_data.shape[0], nii_data.shape[1]), interpolation=cv2.INTER_CUBIC)
         img = np.squeeze(np.load(path_fake))
         img[img<0] = 0
-        pred_fake[:, :, idx] = zoom(img[int(n_slice//2), :, :], zoom=1/resize_f)
+        print(idx)
+        print(img.shape)
+        print(pred_fake.shape)
+        if n_slice == 1:
+            pred_fake[:, :, idx] = zoom(img[ :, :], zoom=1/resize_f)
+        else:
+            pred_fake[:, :, idx] = zoom(img[int(n_slice//2), :, :], zoom=1/resize_f)
     
 #     factor_r = np.sum(nii_data)/np.sum(pred_real)
     factor_f = np.sum(nii_data)/np.sum(pred_fake)

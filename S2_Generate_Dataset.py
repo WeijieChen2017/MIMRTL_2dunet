@@ -14,15 +14,19 @@ def maxmin_norm(data):
     data = (data - MIN)/(MAX-MIN)
     return data
 
-def create_index(dataA, n_slice):
+def create_index(dataA, n_slice, zeroPadding=False):
     h, w, z = dataA.shape
     index = np.zeros((z,n_slice))
     
     for idx_z in range(z):
         for idx_c in range(n_slice):
             index[idx_z, idx_c] = idx_z-(n_slice-idx_c+1)+n_slice//2+2
-    index[index<0]=0
-    index[index>z-1]=z-1
+    if zeroPadding:
+        index[index<0]=z
+        index[index>z-1]=z
+    else:
+        index[index<0]=0
+        index[index>z-1]=z-1
     return index
 
 def slice5_AB(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
@@ -43,14 +47,17 @@ def slice5_AB(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
         np.save(name2save, img)
     print(str(z)+" images have been saved.")
 
-def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
+def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1, folderName='test'):
     # shape supposed to be 512*512*284 by default
-    path2save = "./pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/test/"
+    path2save = "./pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+'/'+folderName+'/'
     h, w, z = dataA.shape
     h = h*resize_f
     w = w*resize_f
     img = np.zeros((n_slice, h, w))
-    index = create_index(dataA, n_slice)
+    index = create_index(dataA, n_slice, zeroPadding=False)
+    emptySlice = np.zeros((h,w,1))
+    dataA = np.concatenate((dataA, emptySlice), axis=2)
+    print(dataA.shape)
         
     for idx_z in range(z):
         for idx_c in range(n_slice):
@@ -59,7 +66,7 @@ def slice5_A(dataA, name_dataset, n_slice=1, name_tag="", resize_f=1):
         np.save(name2save, img)
     print(str(z)+" images have been saved.")
 
-name_dataset = "sk8R"
+name_dataset = "sk8R_721"
 n_slice = 7
 
 import os
@@ -77,34 +84,61 @@ for path_ori in list_ori:
     filename_ori = filename_ori[:filename_ori.find(".")]
     print(filename_ori)
     data_ori = maxmin_norm(nib.load(path_ori).get_fdata())
-    slice5_A(dataA=data_ori, name_dataset=name_dataset, n_slice=n_slice, name_tag=filename_ori, resize_f = 1)
+    slice5_A(dataA=data_ori, name_dataset=name_dataset, n_slice=n_slice,
+             name_tag=filename_ori, resize_f = 1, folderName='test')
     print("------------------------------------------------------------------------")
 
 list_ori = glob.glob("./data/"+name_dataset+"/pure/*.nii")
 list_ori.sort()
+print("Pure:")
 for path_ori in list_ori:
-    print("TrainA:")
     filename_ori = os.path.basename(path_ori)[:]
     filename_ori = filename_ori[:filename_ori.find(".")]
     print(filename_ori)
     data_ori = maxmin_norm(nib.load(path_ori).get_fdata())
-    
-    list_sim = glob.glob("./data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
-    list_sim.sort()
-    
-    for path_sim in list_sim:
-        print("Pairs")
-        filename_sim = os.path.basename(path_sim)[:]
-        filename_sim = filename_sim[:filename_sim.find(".")]
-        print("A:", filename_ori)
-        print("B:", filename_sim)
-                
-        data_sim = maxmin_norm(nib.load(path_sim).get_fdata())
-        slice5_AB(dataA=data_ori, dataB=data_sim,
-                  name_dataset=name_dataset, n_slice=n_slice,
-                  name_tag=filename_sim, resize_f=1)
-        
+    slice5_A(dataA=data_ori, name_dataset=name_dataset, n_slice=1, 
+             name_tag=filename_ori, resize_f = 1, folderName='trainA')
     print("------------------------------------------------------------------------")
+
+list_ori = glob.glob("./data/"+name_dataset+"/blur/*.nii")
+list_ori.sort()
+print("Blur:")
+for path_ori in list_ori:
+    filename_ori = os.path.basename(path_ori)[:]
+    filename_ori = filename_ori[:filename_ori.find(".")]
+    print(filename_ori)
+    data_ori = maxmin_norm(nib.load(path_ori).get_fdata())
+    slice5_A(dataA=data_ori, name_dataset=name_dataset, n_slice=n_slice,
+             name_tag=filename_ori, resize_f = 1, folderName='trainB')
+    print("------------------------------------------------------------------------")
+
+
+
+# list_ori = glob.glob("./data/"+name_dataset+"/pure/*.nii")
+# list_ori.sort()
+# for path_ori in list_ori:
+#     print("TrainA:")
+#     filename_ori = os.path.basename(path_ori)[:]
+#     filename_ori = filename_ori[:filename_ori.find(".")]
+#     print(filename_ori)
+#     data_ori = maxmin_norm(nib.load(path_ori).get_fdata())
+    
+#     list_sim = glob.glob("./data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
+#     list_sim.sort()
+    
+#     for path_sim in list_sim:
+#         print("Pairs")
+#         filename_sim = os.path.basename(path_sim)[:]
+#         filename_sim = filename_sim[:filename_sim.find(".")]
+#         print("A:", filename_ori)
+#         print("B:", filename_sim)
+                
+#         data_sim = maxmin_norm(nib.load(path_sim).get_fdata())
+#         slice5_AB(dataA=data_ori, dataB=data_sim,
+#                   name_dataset=name_dataset, n_slice=n_slice,
+#                   name_tag=filename_sim, resize_f=1)
+        
+#     print("------------------------------------------------------------------------")
         
         
         
