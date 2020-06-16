@@ -61,7 +61,7 @@ class AlignedDataset(BaseDataset):
         # split AB
         c, h, w = AB.shape
         w = w // 2
-        data_A = AB[c//2, :, :w]
+        data_A = AB[:, :, :w]
         data_B = AB[:, :, w:]
             
         A = torch.from_numpy(data_A).float()
